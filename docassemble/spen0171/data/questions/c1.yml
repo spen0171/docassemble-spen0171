@@ -1,0 +1,17 @@
+---
+# Welcome Screen
+mandatory: True
+question: Welcome
+subquestion: |
+  Howdy friends
+  
+  This does a thing
+  
+  Disclaimer
+  
+  
+buttons:
+  - Exit: exit
+    url: http://www.courts.sa.gov.au/
+  - Accept and Continue: continue
+---
