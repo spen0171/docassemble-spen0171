@@ -45,7 +45,7 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
 setup(name='docassemble.spen0171',
       version='0.0.1',
       description=('A docassemble extension.'),
-      long_description='# docassemble.spen0171\n\nA docassemble extension.\n\n## Author\n\nLaura Spencer, spen0171@flinders.edu.au\n\n',
+      long_description='# docassemble.spen0171\r\n\r\nA docassemble extension.\r\n\r\n## Author\r\n\r\nLaura Spencer, spen0171@flinders.edu.au\r\n\r\n',
       long_description_content_type='text/markdown',
       author='Laura Spencer',
       author_email='spen0171@flinders.edu.au',

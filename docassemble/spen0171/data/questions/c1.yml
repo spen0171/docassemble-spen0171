@@ -1,17 +1,147 @@
 ---
-# Welcome Screen
+# Objects declaration
+objects:
+  - endpoint: DADict
+---
+# Welcome to the Application
 mandatory: True
-question: Welcome
+question: Welcome!
 subquestion: |
-  Howdy friends
+  This application will step you through the creation of a Federal Court Form.
   
-  This does a thing
-  
-  Disclaimer
-  
-  
+  ***Disclaimer:
+  This app is not a substitute for professional legal advice. 
+  You should have the finished form checked over by a licensed lawyer.***
 buttons:
   - Exit: exit
     url: http://www.courts.sa.gov.au/
   - Accept and Continue: continue
+---
+# Code block to direct program flow
+# depending on which court the file is to be completed for
+mandatory: True
+code: |
+  if (court_choice == 'Federal Court') or (court_choice == 'Federal Circuit Court'):
+    #continue
+    endpoint['eligible']
+  else:
+    #direct user to exit/start over screen
+    endpoint['ineligible']
+---
+# Ask the user which court the file is to be completed for
+question: Which Court is this Form to be Completed for?
+fields:
+  - no label: court_choice
+    datatype: radio
+    choices:
+      - Supreme Court
+      - District Court
+      - Magistrates Court
+      - Federal Court
+      - Federal Circuit Court
+---
+# User inputs who the involved parties are
+question: Who are the Involved Parties?
+fields:
+  - First Party:: party1
+  - Second Party:: party2
+---
+# Asks the state this applies to
+question: What State does your District Registry Belong to?
+fields:
+  - no label: state
+    datatype: radio
+    choices:
+      - New South Wales
+      - Victoria
+      - Queensland
+      - Western Australia
+      - South Australia
+      - Tasmania
+      - Australian Captial Territory
+      - Northern Territory
+---
+# Asks what division this pertains to
+question: Which Division does this Pertain to?
+fields:
+  - no label: division
+    datatype: radio
+    choices:
+      - Corporations
+      - Criminal
+      - Employment
+      - General
+---
+# Asks the name of the applicant
+question: What is the Full Name of the Applicant?
+fields:
+  - First Name:: applicant_fname
+  - Middle Name:: applicant_mname
+    required: False
+  - Last Name:: applicant_lname
+---
+# Asks the name of the respondent
+question: What is the Full Name of the Respondent?
+fields:
+  - First Name:: respondent_fname
+  - Middle Name:: respondent_mname
+    required: False
+  - Last Name:: respondent_lname
+---
+# Asks the details of the user
+question: What is your Name and Role?
+fields:
+  - First Name:: user_fname
+  - Last Name:: user_lname
+  - Role:: user_title
+---
+# Asks the date that this form is completed on
+question: What is the Sign Date?
+fields:
+  - Date:: date
+    datatype: date
+---
+# Eligible court choice
+event: endpoint['eligible']
+question: Here is your ${ court_choice } Form!
+subquestion: |
+  Congratulations! Here is your completed ${ court_choice } Form in PDF format. 
+  The details of your file are as follows:
+  
+  Questions Asked|Answers Provided
+  ---------------|----------------
+  Court|${ court_choice }
+  First Party|${ party1 }
+  Second Party|${ party2 }
+  State|${ state }
+  Division|${ division }
+  Applicant Full Name|${ applicant_fname } ${ applicant_mname } ${ applicant_lname }
+  Respondent Full Name|${ respondent_fname } ${ respondent_mname } ${ respondent_lname }
+  Your Full Name|${ user_fname } ${ user_lname }
+  Your Role|${ user_title }
+  Date Signed|${ date }
+ 
+  Be sure to download your file by clicking the link below. You can also email it to yourself using the appropriate fields below.
+attachment:
+  name: ${ court_choice } Form
+  filename: filled_court_form
+  docx template file: FCA_form001_20110801.docx
+  valid formats:
+    - pdf
+buttons:
+    - Finish: exit
+      url: https://www.fedcourt.gov.au/
+---
+# Ineligible court choice
+event: endpoint['ineligible']
+question: Oops! Invalid Court Choice
+subquestion: | 
+  This application will only prepare forms for the following courts:
+  
+  * Federal Court
+  * Federal Circuit Court
+buttons:
+  - Exit: exit
+    url: http://www.courts.sa.gov.au/
+  - Restart: restart
 ---
