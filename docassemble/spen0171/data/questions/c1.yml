@@ -89,17 +89,39 @@ fields:
   - Last Name:: respondent_lname
 ---
 # Asks the details of the user
-question: What is your Name and Role?
+question: What are your Details?
 fields:
   - First Name:: user_fname
   - Last Name:: user_lname
   - Role:: user_title
+  - Phone Number:: user_tel
+  - Email:: user_email
+    datatype: email
+  - Address Line 1:: user_addr1
+  - Address Line 2:: user_addr2
+  - Law Firm (if applicable):: law_firm
+    required: False
+  - Fax Number:: user_fax
+    required: False
+---
+# Asks who this form is being completed for
+question: Who do you Represent?
+fields:
+  - First Name:: filed_for_fname
+  - Last Name:: filed_for_lname
+  - Role:: filed_for_role
+    datatype: radio
+    choices:
+      - Applicant
+      - Respondent
 ---
 # Asks the date that this form is completed on
 question: What is the Sign Date?
 fields:
   - Date:: date
     datatype: date
+    default: |
+      ${ today() }
 ---
 # Eligible court choice
 event: endpoint['eligible']
@@ -119,7 +141,13 @@ subquestion: |
   Respondent Full Name|${ respondent_fname } ${ respondent_mname } ${ respondent_lname }
   Your Full Name|${ user_fname } ${ user_lname }
   Your Role|${ user_title }
+  Your Phone Number|${ user_tel }
+  Your Email Address|${ user_email }
+  Your Address|${ user_addr1 }, ${ user_addr2 }
+  Your Fax Number|${ user_fax }
+  Your Law Firm|${ law_firm }
   Date Signed|${ date }
+  On Behalf Of|${ filed_for_fname } ${ filed_for_lname }, the ${ filed_for_role }
  
   Be sure to download your file by clicking the link below. You can also email it to yourself using the appropriate fields below.
 attachment:
