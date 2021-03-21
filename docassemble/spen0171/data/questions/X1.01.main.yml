@@ -15,7 +15,6 @@
 # Students should
 # - test for the elements of contract according to contract law
 # - do so in easy to read language with a Fleish score of > 60
-
 ---
 # This is a complex program.  We therefore split the code out 
 # into multiple files (see the B1.01 video for more info)
@@ -33,19 +32,12 @@ include:
 mandatory: True
 question: Breach of Contract App
 subquestion: |
-  This is the first or 'Welcome' screen that the user
-  sees when they run the app.  This screen should describe
-  what the app does to the user.
-
-  The screen may also need to include a disclaimer, particularly
-  as this app is providing legal advice.
-
-  The screen should contain a click-through agreement indicating
-  the user agrees to the disclaimer and any other terms before
-  proceeding.
-
-  The screen should also give the user the option to exit the
-  app at this point
+  Welcome to the Breach of Contract App!
+  This app will step you through the formation of a case for a breach of contract, and will advise if you have any basis to sue.
+  
+  ***Disclaimer:
+  This app is not a substitute for professional legal advice. 
+  You should consult a licensed lawyer before taking legal action.***
 buttons:
   - I agree and wish to continue: continue
   - I do not agree and wish to exit: exit
@@ -63,41 +55,27 @@ code: |
   # We need to split off here depending on what the user
   # answered
   if MJFsue_reason == 'MJFpromisor':
-    # Students will need to put logic in here
-    # for the promisor part of the code
-    pass
-  elif MJFsue_reason == 'MJFpromisee':
-    # This is right side of the flowchart.  Off we go!
-
-    # First we ask the prelimiary questions
-    MJFwork_requested
-    MJFpayment_agreed
     
-    # Now we can implement contract law as code.  Contract law
-    # states that we can only have a contract if we have
-    # Offer and Acceptance AND consideration AND Agreement AND Capacity
-    # All four elements must be present in order for a contract to exist.
-    # Conversely, if any of the four is not present then there is not
-    # a contract.  
-    #
-    # This means we only need to ask questions until we find that one
-    # of those elements doesn't exist.  For example, if there was no
-    # consideration, there's no point asking about capacity or agreement.
-    # We do this using a set of AND operators.  A logical AND means
-    # both sides must be true.  If the left side of an AND is not true
-    # then python won't bother evaluating the right side.  If we have
-    # many ANDs joined together, python evaluates them left to right
-    # and stops as soon as it finds a False.  We can use this property
-    # to control how many questions we ask
-    if MJFcertainty == 'MJFagree_exact' and MJFconsideration == True and MJFcapacity == True:
-      MJFcontract_exists = True
-    else:
-      MJFcontract_exists = False
-
-    # Now we know whether there is a contract or not we can display
-    # the final screen that contains a result and an explanation of why
-    endpoints['final_screen']
-
+    # set the text of each question block for the left side of the flowchart
+    MJFwork_requested_text = 'Describe the work you did'
+    MJFpayment_agreed_text = 'How much did you agree to be paid for this work?'
+    MJFcertainty_text = 'Did you agree to do this work?'
+    MJFagree_exact_text = 'Yes. I agreed to do exactly this work'
+    MJFagree_inexact_text = 'Yes. I agreed to do some of this work, but there was other work that was not agreed to that I did'
+    MJFdisagree_text = 'No. I did not agree to do this work or all of this work'
+    MJFconsideration_text = 'Did you and the other person agree how much you would be paid for the work'
+  
+  elif MJFsue_reason == 'MJFpromisee':
+  
+    # set the text of each question block for the right side of the flowchart
+    MJFwork_requested_text = 'Describe the work you wanted done'
+    MJFpayment_agreed_text = 'How much did you agree to pay for this work?'
+    MJFcertainty_text = 'Did the other person agree to do this work?'
+    MJFagree_exact_text = 'Yes. The other person agreed to do exactly this work'
+    MJFagree_inexact_text = 'Yes. The other person agreed to do some of this work, but there was other work that was not agreed to that wasn\'t done'
+    MJFdisagree_text = 'No. The other person did not agree to do this work or all of this work'
+    MJFconsideration_text = 'Did you and the other person agree how much you would pay for the work?'
+    
   else:
     # We should never end up at this else statement as MJFsue_reason
     # should only ever be one of the two values above.  But if we've
@@ -108,4 +86,21 @@ code: |
 
     error_message = 'Unknown value in MJFsue_reason: {}'.format(MJFsue_reason)
     endpoints['error_screen']
+    
+    
+  # First we ask the prelimiary questions
+  MJFwork_requested
+  MJFpayment_agreed
+  
+  # Now we can implement contract law as code.  Contract law
+  # states that we can only have a contract if we have
+  # Offer and Acceptance AND consideration AND Agreement AND Capacity
+  # All four elements must be present in order for a contract to exist.
+  # Conversely, if any of the four is not present then there is not
+  # a contract.  
+  MJFcontract_exists = (MJFcertainty == 'MJFagree_exact') and (MJFconsideration) and (MJFcapacity)
+
+  # Now we know whether there is a contract or not we can display
+  # the final screen that contains a result and an explanation of why
+  endpoints['final_screen']
 ---

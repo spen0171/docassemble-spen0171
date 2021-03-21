@@ -98,7 +98,7 @@ content: |
     or there was other work done that was not agreed to.
   % endif
   % if not MJFconsideration:
-  - You never reached a firm agreement on how much to pay for the work done.
+  - You never reached a firm agreement on how much should be paid for the work done.
   % endif
   % if not MJFcapacity:
   - The other person was under 18.  It is possible in some circumstances to enter into
@@ -110,7 +110,7 @@ content: |
   In order for there to be a contract, you need to prove these things:
 
   - That you and the other person agreed to the work to be done.
-  - That you and the other person agreed to how much you would pay for the work.
+  - That you and the other person agreed to how much would be paid for the work.
   - That you and the other person are able to enter into a contract.  Usually this means you
     both should be over 18 years old.  You need to seek legal advice if one or both of
     you is under 18.
