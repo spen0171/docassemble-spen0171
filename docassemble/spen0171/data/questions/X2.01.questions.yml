@@ -1,19 +1,25 @@
 ---
-question: ""
+question: "SACAT Homelessness Advisor"
 subquestion: |
   Welcome to the SACAT Homelessness Advisor. This application is designed
   to help you find services that may assist you if you are facing homelessness.
  
   ***Disclaimer:***   
-  This is a guide to selected service only and may not include all services.
+  *This is a guide to selected service only and may not include all services.
   There are no guarantees that any individual service will accept your enquiry
-  or provide services to you.
+  or provide services to you.*
   
   Do you accept these terms?
 yesno: HAAeligible
 ---
 question: |
-  Do you identify as:
+  What gender do you identify as?
+subquestion: |
+  Please choose the gender that you identify as.
+ 
+  Choose 'Other' if male or female does not describe you.
+ 
+  If you do not want to share, choose 'Prefer not to Say'.
 fields: 
   - no label: HAAgender
     datatype: radio
@@ -27,13 +33,13 @@ question: |
 yesno: HAApets
 ---
 question: |
-  Are you seeking accommodation on your own or with your family?
+  Are you looking for housing on your own or with your family?
 fields: 
   - no label: HAAfamily
     datatype: radio
     choices:
-     - "I am seeking accommodation on my own": singles
-     - "I am seeking accommodation with my family, or I am pregnant": family
+     - "I am looking for housing on my own": singles
+     - "I am looking for housing with my family, or I am pregnant": family
 ---
 question: |
   Do you live in the Adelaide Metropolitan Area?

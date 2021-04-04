@@ -853,6 +853,7 @@ data:
     metro: true
     blurb: Services young people aged 17-25 years who are homeless or at risk of homelessness.
   - service: Safe Pets Safe Families
+    service_provider: 
     address: PO Box 427, CHRISTIES BEACH SA 5165
     website: https://safepetssafefamilies.org.au/
     email: safepetssafefamilies@gmail.com

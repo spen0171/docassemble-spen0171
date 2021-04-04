@@ -42,7 +42,7 @@ code: |
   # some custom HTML.  The string below creates the HTML and 
   # inserts into it the logo contained in the file SACATlogo using
   # the python format() method 
-  HAAlogostring = '<div class="media"><img src="{}" class="mr-3" height="50"><div class="media-body"></div></div>'.format(SACATlogo.url_for())
+  HAAlogostring = '<div class="media"><img src="{}" class="mr-3" height="40"><div class="media-body"></div></div>'.format(SACATlogo.url_for())
 
   # Once we've created the string we use set_parts() to set our new logo metadata
   set_parts(logo=HAAlogostring)
@@ -68,7 +68,7 @@ subquestion:  |
 
   You should contact them as soon as you can to try an arrange emergency housing.
 
-  % if HAApets:
+  % if HAApets and len(HAAdisplay_pets) > 0:
   ### Services for Pets
 
   The agencies listed here will not accept pets.
@@ -81,20 +81,10 @@ subquestion:  |
   %endfor  
   % endif
   
-  % if HAAabor:
-  ### Services for Aboriginal or Torres Strait Islander Residents
-  
-  %for HAAdisplay_entry in HAAdisplay_atsi:
-  ${ HAAdisplay_entry['display_record'].show() }
-  %endfor 
-  
-  % endif
-  
-  
   % if HAAgender != 'other':
-  % if HAAgender == 'male':
+  % if HAAgender == 'male' and len(HAAdisplay_gender) > 0:
   ### Services for Men
-  % else:
+  % elif HAAgender == 'female' and len(HAAdisplay_gender) > 0:
   ### Services for Women
   % endif
   
@@ -104,10 +94,18 @@ subquestion:  |
   
   % endif
   
+  % if HAAabor and len(HAAdisplay_atsi) > 0:
+  ### Services for Aboriginal or Torres Strait Islander Residents
   
-  % if HAAfamily == 'singles':
+  %for HAAdisplay_entry in HAAdisplay_atsi:
+  ${ HAAdisplay_entry['display_record'].show() }
+  %endfor 
+  
+  % endif
+  
+  % if HAAfamily == 'singles' and len(HAAdisplay_families) > 0:
   ### Services for Single Accommodation
-  % else:
+  % elif HAAfamily == 'family' and len(HAAdisplay_families) > 0:
   ### Services for Families
   % endif
   
@@ -115,11 +113,13 @@ subquestion:  |
   ${ HAAdisplay_entry['display_record'].show() }
   %endfor  
   
+  % if len(HAAdisplay_other) > 0:
   ### Other Services
   
   %for HAAdisplay_entry in HAAdisplay_other:
   ${ HAAdisplay_entry['display_record'].show() }
   %endfor
+  % endif
   
   ### Community Housing
   
@@ -143,7 +143,7 @@ attachment:
 event: endpoints['ineligible']
 question: Not Eligible
 subquestion:
-  The disclaimer has not been understood and accepted.  Please exit the
+  The disclaimer has not been accepted. Please either exit the
   application or restart if you'd like to accept the disclaimer.
 buttons:
   - Exit: exit

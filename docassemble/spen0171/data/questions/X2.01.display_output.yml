@@ -1,7 +1,15 @@
 ---
+features:
+  css: X2.01.final_screen.css
+  debug: True
+  hide standard menu: False
+---
 template: HAA_agencylist[i]['display_record']
 content: |
-  **[${ HAA_agencylist[i].item('service') }]( ${ HAA_agencylist[i].item('website') })**  
+  <span class="service-name">
+  **[${ HAA_agencylist[i].item('service') }]( ${ HAA_agencylist[i].item('website') })** 
+  </span>
+  
   ${ HAA_agencylist[i].item('address') } [BR]
   ${ HAA_agencylist[i].item('email') } [BR]
   ${ HAA_agencylist[i].item('phone') } [BR]
